@@ -23,7 +23,7 @@ export default createSchema({
             type: 'string',
           },
           {
-            name: 'walletAdress',
+            name: 'walletAddress',
             title: 'Wallet Address',
             type: 'string',
           },
