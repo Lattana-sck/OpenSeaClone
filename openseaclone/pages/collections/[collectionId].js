@@ -1,115 +1,3 @@
-// import React, { useEffect, useMemo, useState } from 'react'
-// import { useRouter } from 'next/router'
-// import Link from 'next/link'
-// import { useWeb3 } from '@3rdweb/hooks'
-// import { ThirdwebSDK } from '@3rdweb/sdk'
-// import client from '../../lib/sanityClient'
-
-// const style = {
-//   bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
-//   bannerImage: `w-full object-cover`,
-//   infoContainer: `w-screen px-4`,
-//   midRow: `w-full flex justify-center text-white`,
-//   endRow: `w-full flex justify-end text-white`,
-//   profileImg: `w-40 h-40 object-cover rounded-full border-2 border-[#202225] mt-[-4rem]`,
-//   socialIconsContainer: `flex text-3xl mb-[-2rem]`,
-//   socialIconsWrapper: `w-44`,
-//   socialIconsContent: `flex container justify-between text-[1.4rem] border-2 rounded-lg px-2`,
-//   socialIcon: `my-2`,
-//   divider: `border-r-2`,
-//   title: `text-5xl font-bold mb-4`,
-//   createdBy: `text-lg mb-4`,
-//   statsContainer: `w-[44vw] flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
-//   collectionStat: `w-1/4`,
-//   statValue: `text-3xl font-bold w-full flex items-center justify-center`,
-//   ethLogo: `h-6 mr-2`,
-//   statName: `text-lg w-full text-center mt-1`,
-//   description: `text-[#8a939b] text-xl w-max-1/4 flex-wrap mt-4`,
-// }
-
-// const Collection = () => {
-//     const router = useRouter()
-//     const { provider } = useWeb3()
-//     const { collectionId } = router.query
-//     const [collection, setCollection] = useState({})
-//     const [nfts, setNfts] = useState([])
-//     const [listings, setListings] = useState([])
-    
-//     const nftModule = useMemo(() => {
-//       if(!provider) return
-    
-//       const sdk = new ThirdwebSDK(
-//         provider.getSigner(),
-//         'https://eth-rinkeby.alchemyapi.io/v2/No5ohSYJbNlu1e2XsoW0p4gR1MUzJpRV'
-//       )
-//         return sdk.getNFTmodule(collectionId)
-//     }, [provider])
-
-//   // get all NFTs in the collection
-//   useEffect(() => {
-//     if (!nftModule) return
-//     ;(async () => {
-//       const nfts = await nftModule.getAll()
-
-//       setNfts(nfts)
-//     })()
-//   }, [nftModule])
-
-//   const marketPlaceModule = useMemo(() => {
-//     if (!provider) return
-
-//     const sdk = new ThirdwebSDK(
-//       provider.getSigner(),
-//       'https://eth-rinkeby.alchemyapi.io/v2/No5ohSYJbNlu1e2XsoW0p4gR1MUzJpRV'
-
-//     )
-//     return sdk.getMarketplaceModule(
-//       '0x3bADdceDD979F358d26e401b850526906dAF30D4'
-//     )
-//   }, [provider])
-
-//   // get all listings in the collection
-//   useEffect(() => {
-//     if (!marketPlaceModule) return
-//     ;(async () => {
-//       setListings(await marketPlaceModule.getAllListings())
-//     })()
-//   }, [marketPlaceModule])
-  
-//   const fetchCollectionData = async (sanityClient = client) => {
-//     const query = `*[_type == "marketItems"] {
-//       "imageUrl": profileImage.asset->url,
-//       "bannerImageUrl": bannerImage.asset->url,
-//       volumeTraded,
-//       createdBy,
-//       contractAddress,
-//       "creator": createdBy->userName,
-//       title, floorPrice,
-//       "allOwners": owners[]->,
-//       description
-//     }`
-
-//     const collectionData = await sanityClient.fetch(query);
-
-//     // the query returns 1 object inside of an array
-//     await setCollection(collectionData[0])
-//   }
-
-//   useEffect(() => {
-//     fetchCollectionData()
-
-//   }, [collectionId])
-//     return (
-//       <Link href='/'>
-//           <h2>{router.query.collectionId}</h2>
-//       </Link>
-//     )
-//   }
-
-// export default Collection
-
-
-
 import React, { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -209,8 +97,6 @@ const Collection = () => {
 
     const collectionData = await sanityClient.fetch(query)
 
-    console.log(collectionData, '🔥')
-
     // the query returns 1 object inside of an array
     await setCollection(collectionData[0])
   }
@@ -230,7 +116,7 @@ const Collection = () => {
           src={
             collection?.bannerImageUrl
               ? collection.bannerImageUrl
-              : 'https://via.placeholder.com/200'
+              : 'https://lh3.googleusercontent.com/PjfRHGbEICydusUW1ubKBWWSyOAiIDcCpuO3MyORv4qwzZNy3MQVkQRWbc_bP3uCHTGuf3cpsIIXrXf6v-FThfuOIUu0i61kp2_r14Q=h600'
           }
           alt="banner"
         />
@@ -242,7 +128,7 @@ const Collection = () => {
             src={
               collection?.imageUrl
                 ? collection.imageUrl
-                : 'https://via.placeholder.com/200'
+                : 'https://ik.imagekit.io/bayc/assets/bayc-footer.png'
             }
             alt="profile image"
           />
@@ -294,7 +180,7 @@ const Collection = () => {
             <div className={style.collectionStat}>
               <div className={style.statValue}>
                 <img
-                  src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+                  src="https://openseauserdata.com/files/6f8e2979d428180222796ff4a33ab929.svg"
                   alt="eth"
                   className={style.ethLogo}
                 />
@@ -305,7 +191,7 @@ const Collection = () => {
             <div className={style.collectionStat}>
               <div className={style.statValue}>
                 <img
-                  src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+                  src="https://openseauserdata.com/files/6f8e2979d428180222796ff4a33ab929.svg"
                   alt="eth"
                   className={style.ethLogo}
                 />
